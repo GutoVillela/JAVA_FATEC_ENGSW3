@@ -204,8 +204,6 @@ public class frmLogin extends javax.swing.JFrame {
         catch(Exception erro){
             
         }
-        
-        
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**

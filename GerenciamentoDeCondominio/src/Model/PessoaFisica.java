@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class PessoaFisica extends Pessoa{
     
-//Construtor da classe Pessoa Física
+    //Construtor da classe Pessoa Física
     public PessoaFisica(){
         this.tabelaBD = "PESSOAS_FISICAS";
         con = new Conexao();//Inicializar instância da classe de conexão
