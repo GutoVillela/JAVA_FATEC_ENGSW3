@@ -14,7 +14,7 @@ public class Conexao {
     
     //ATRIBUTOS PARA CONEXÃO
     private final String driver = "com.mysql.jdbc.Driver"; // ESTA LINHA CHAMA O DRIVER
-    private final String url = "jdbc:mysql://localhost:3306/ENG_SW3"; // ESTE É O ENDEREÇO DO BANCO DE DADOS (VAI SER UTILIZADO PARA RECUPERAR UMA STRING DE CONEXÃO MAIS A FRENTE)
+    private final String url = "jdbc:mysql://localhost:3306/ENG_SW_3"; // ESTE É O ENDEREÇO DO BANCO DE DADOS (VAI SER UTILIZADO PARA RECUPERAR UMA STRING DE CONEXÃO MAIS A FRENTE)
     private final String user = "root"; // USUÁRIO DO BANCO
     private final String password = ""; // ESTA É A SENHA PARA CONECTAR COM O BANCO DE DADOS
     

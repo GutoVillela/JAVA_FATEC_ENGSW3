@@ -11,6 +11,8 @@ import Model.Locador;
  */
 public class LocadorController {
     
-    
+    public boolean Cadastrar(Locador locador){
+        return true;
+    }
     
 }

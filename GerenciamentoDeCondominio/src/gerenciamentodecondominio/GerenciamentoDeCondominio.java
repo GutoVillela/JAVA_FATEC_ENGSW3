@@ -5,6 +5,9 @@
  */
 package gerenciamentodecondominio;
 
+import View.*;
+import javax.swing.JFrame;
+
 /**
  *
  * @author User
@@ -15,7 +18,9 @@ public class GerenciamentoDeCondominio {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Instanciar tela inicial na tela
+        JFrame telaInicial = new frmLogin();
+        telaInicial.setVisible(true);
     }
     
 }
