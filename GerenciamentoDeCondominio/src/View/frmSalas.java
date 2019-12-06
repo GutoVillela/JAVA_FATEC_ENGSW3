@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
+
+import Controller.SalaController;
+import Model.Sala;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,6 +50,11 @@ public class frmSalas extends javax.swing.JFrame {
         jLabel4.setText("Proprietário .:");
 
         btnSalasAdd.setText("ADICIONAR");
+        btnSalasAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalasAddActionPerformed(evt);
+            }
+        });
 
         btnSalasEditar.setText("EDITAR");
 
@@ -112,6 +116,20 @@ public class frmSalas extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalasAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasAddActionPerformed
+        SalaController sc = new SalaController();
+        Sala s = new Sala();
+        s.setAndar(Integer.parseInt(txtSalasAndar.getText().trim()));
+        s.setBloco(Integer.parseInt(txtSalasBloco.getText().trim()));
+        s.setNumero(Integer.parseInt(txtSalaNro.getText().trim()));
+        s.setProprietario(Integer.parseInt(txtSalasProprietario.getText().trim()));
+
+        if (sc.cadastrar(s))
+            JOptionPane.showMessageDialog(null, "Sala Adicionada com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);        
+        else
+            JOptionPane.showMessageDialog(null, "Erro ao Adicionar", "ERRO !", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_btnSalasAddActionPerformed
 
     /**
      * @param args the command line arguments
