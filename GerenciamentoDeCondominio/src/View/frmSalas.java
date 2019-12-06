@@ -2,6 +2,9 @@ package View;
 
 import Controller.SalaController;
 import Model.Sala;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,6 +40,7 @@ public class frmSalas extends javax.swing.JFrame {
         btnSalasAdd = new javax.swing.JButton();
         btnSalasEditar = new javax.swing.JButton();
         btnSalasRemover = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FORMULÁRIO DE SALA");
@@ -57,34 +61,56 @@ public class frmSalas extends javax.swing.JFrame {
         });
 
         btnSalasEditar.setText("EDITAR");
+        btnSalasEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalasEditarActionPerformed(evt);
+            }
+        });
 
         btnSalasRemover.setText("REMOVER");
+        btnSalasRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalasRemoverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtSalaNro, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                        .addComponent(txtSalasBloco)
-                        .addComponent(txtSalasAndar)
-                        .addComponent(txtSalasProprietario))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalasAdd)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtSalaNro, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                            .addComponent(txtSalasAndar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4))
                         .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSalasBloco, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSalasProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalasEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(53, 53, 53)
                         .addComponent(btnSalasRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(btnSalasAdd)))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,25 +118,24 @@ public class frmSalas extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtSalaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSalaNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtSalasBloco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtSalasAndar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSalasAndar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(txtSalasProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                .addGap(18, 18, 18)
+                .addComponent(btnSalasAdd)
+                .addGap(25, 25, 25)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalasAdd)
                     .addComponent(btnSalasEditar)
                     .addComponent(btnSalasRemover))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,10 +151,40 @@ public class frmSalas extends javax.swing.JFrame {
         s.setProprietario(Integer.parseInt(txtSalasProprietario.getText().trim()));
 
         if (sc.cadastrar(s))
-            JOptionPane.showMessageDialog(null, "Sala Adicionada com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);        
+            JOptionPane.showMessageDialog(null, "Sala Adicionada com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
         else
             JOptionPane.showMessageDialog(null, "Erro ao Adicionar", "ERRO !", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnSalasAddActionPerformed
+
+    private void btnSalasRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasRemoverActionPerformed
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID da SALA"));
+        System.out.println(id);
+        SalaController sc = new SalaController();
+        Sala s = new Sala();
+        s.setId(id);
+        if (sc.remover(s))
+            JOptionPane.showMessageDialog(null, "Sala removida com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
+        else
+            JOptionPane.showMessageDialog(null, "Sala não removida!", "ERRO !", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_btnSalasRemoverActionPerformed
+
+    private void btnSalasEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasEditarActionPerformed
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID da SALA"));
+        System.out.println(id);
+        SalaController sc = new SalaController();
+        //Sala s = new Sala();
+        
+        try {
+            if (sc.buscar(id))
+                //JOptionPane.showMessageDialog(null, "Sala removida com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("OK");
+            else
+                //JOptionPane.showMessageDialog(null, "Sala não removida!", "ERRO !", JOptionPane.ERROR_MESSAGE);
+                System.out.println(";NOK");
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSalas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalasEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,6 +229,7 @@ public class frmSalas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField txtSalaNro;
     private javax.swing.JTextField txtSalasAndar;
     private javax.swing.JTextField txtSalasBloco;
