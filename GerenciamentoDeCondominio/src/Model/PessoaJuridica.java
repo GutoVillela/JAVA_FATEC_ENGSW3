@@ -11,7 +11,7 @@ import java.sql.SQLException;
  *
  * @author Gustavo
  */
-public class PessoaJuridica {
+public class PessoaJuridica extends Pessoa {
     
     //Construtor da classe Pessoa Física
     public PessoaJuridica(){

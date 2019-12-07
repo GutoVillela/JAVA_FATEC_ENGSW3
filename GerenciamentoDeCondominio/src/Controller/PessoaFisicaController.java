@@ -27,8 +27,11 @@ public class PessoaFisicaController {
             return false;
         }
         
-        
-        
+    }
+    
+    public int RecuperarIdUltimaPessoaFisicaCadastrada(){
+        PessoaFisica pf = new PessoaFisica();
+        return pf.RecuperarUltimoIdCadastrado();
     }
     
 }
