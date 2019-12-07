@@ -13,11 +13,27 @@ import javax.swing.JOptionPane;
  */
 public class frmSalas extends javax.swing.JFrame {
 
+    public static Sala salaEstatica;
+
     /**
      * Creates new form frmSalas
      */
     public frmSalas() {
         initComponents();
+    }
+
+    /*Opção usada para exibir ou ocultar os botões: 1 para adicionar e 0 para editar*/
+    public frmSalas(int opc) {
+        initComponents();
+        if (opc == 1) {
+            btnSalasEditar.setVisible(false);
+        } else {
+            btnSalasAdd.setVisible(false);            
+            txtSalaNro.setText(String.valueOf(salaEstatica.getNumero()));
+            txtSalasAndar.setText(String.valueOf(salaEstatica.getAndar()));
+            txtSalasBloco.setText(String.valueOf(salaEstatica.getBloco()));
+            txtSalasProprietario.setText(String.valueOf(salaEstatica.getProprietario()));
+        }
     }
 
     /**
@@ -39,10 +55,8 @@ public class frmSalas extends javax.swing.JFrame {
         txtSalasProprietario = new javax.swing.JTextField();
         btnSalasAdd = new javax.swing.JButton();
         btnSalasEditar = new javax.swing.JButton();
-        btnSalasRemover = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("FORMULÁRIO DE SALA");
 
         jLabel1.setText("Número .:");
@@ -67,13 +81,6 @@ public class frmSalas extends javax.swing.JFrame {
             }
         });
 
-        btnSalasRemover.setText("REMOVER");
-        btnSalasRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalasRemoverActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,7 +91,7 @@ public class frmSalas extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtSalaNro, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
@@ -98,19 +105,10 @@ public class frmSalas extends javax.swing.JFrame {
                             .addComponent(txtSalasBloco, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSalasProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalasEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
-                        .addComponent(btnSalasRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(btnSalasAdd)))
-                .addGap(0, 22, Short.MAX_VALUE))
+                        .addComponent(btnSalasAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addComponent(btnSalasEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,14 +126,10 @@ public class frmSalas extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtSalasProprietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnSalasAdd)
-                .addGap(25, 25, 25)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalasEditar)
-                    .addComponent(btnSalasRemover))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(btnSalasAdd)
+                    .addComponent(btnSalasEditar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -152,40 +146,24 @@ public class frmSalas extends javax.swing.JFrame {
 
         if (sc.cadastrar(s)) {
             JOptionPane.showMessageDialog(null, "Sala Adicionada com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
-            limpar_telas();
+            this.dispose();
         } else
             JOptionPane.showMessageDialog(null, "Erro ao Adicionar", "ERRO !", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnSalasAddActionPerformed
 
-    private void btnSalasRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasRemoverActionPerformed
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID da SALA"));
-        System.out.println(id);
+    private void btnSalasEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasEditarActionPerformed
         SalaController sc = new SalaController();
         Sala s = new Sala();
-        s.setId(id);
-        if (sc.remover(s))
-            JOptionPane.showMessageDialog(null, "Sala removida com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
+        s.setId(salaEstatica.getId());
+        s.setAndar(Integer.parseInt(txtSalasAndar.getText()));
+        s.setBloco(Integer.parseInt(txtSalasBloco.getText()));
+        s.setNumero(Integer.parseInt(txtSalaNro.getText()));
+        s.setProprietario(Integer.parseInt(txtSalasProprietario.getText()));
+        if (sc.atualizar(s))
+            JOptionPane.showMessageDialog(null, "Sala Editada com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
         else
-            JOptionPane.showMessageDialog(null, "Sala não removida!", "ERRO !", JOptionPane.ERROR_MESSAGE);
-    }//GEN-LAST:event_btnSalasRemoverActionPerformed
-
-    private void btnSalasEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasEditarActionPerformed
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID da SALA"));
-        System.out.println(id);
-        SalaController sc = new SalaController();
-        //Sala s = new Sala();
-
-        try {
-            if (sc.buscar(id)) //JOptionPane.showMessageDialog(null, "Sala removida com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
-            {
-                System.out.println("OK");
-            } else //JOptionPane.showMessageDialog(null, "Sala não removida!", "ERRO !", JOptionPane.ERROR_MESSAGE);
-            {
-                System.out.println(";NOK");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(frmSalas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            JOptionPane.showMessageDialog(null, "Erro na Edição!", "ERRO !", JOptionPane.ERROR_MESSAGE);
+        this.dispose();
     }//GEN-LAST:event_btnSalasEditarActionPerformed
 
     /**
@@ -226,12 +204,10 @@ public class frmSalas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalasAdd;
     private javax.swing.JButton btnSalasEditar;
-    private javax.swing.JButton btnSalasRemover;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField txtSalaNro;
     private javax.swing.JTextField txtSalasAndar;
     private javax.swing.JTextField txtSalasBloco;
