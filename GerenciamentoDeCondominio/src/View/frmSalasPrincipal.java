@@ -102,14 +102,16 @@ public class frmSalasPrincipal extends javax.swing.JFrame {
         int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID da SALA"));
         System.out.println(id);
         SalaController sc = new SalaController();
-        //Sala s = new Sala();
 
         try {
-            if (sc.buscar(id)) //JOptionPane.showMessageDialog(null, "Sala removida com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
-            {
+            //Caso encontra uma sala com o id informado                
+            if (sc.buscar(id)) {
+                Sala s = new Sala();   
+                s = s.buscar(id);   //busacar() retorna um objeto do tipo Sala
+                frmSalas.salaEstatica = s;     //atibui o objeto retornado a variável estática do prox. form
+                new frmSalas(0).setVisible(true);                     
                 System.out.println("OK");
-            } else //JOptionPane.showMessageDialog(null, "Sala não removida!", "ERRO !", JOptionPane.ERROR_MESSAGE);
-            {
+            } else {
                 System.out.println(";NOK");
             }
         } catch (SQLException ex) {
@@ -130,7 +132,7 @@ public class frmSalasPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrincipalRemoverActionPerformed
 
     private void btnPrincipalAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrincipalAddActionPerformed
-        new frmSalas().setVisible(true);
+        new frmSalas(1).setVisible(true);
     }//GEN-LAST:event_btnPrincipalAddActionPerformed
 
     /**
