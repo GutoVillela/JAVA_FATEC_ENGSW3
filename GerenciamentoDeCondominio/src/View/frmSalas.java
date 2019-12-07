@@ -150,9 +150,10 @@ public class frmSalas extends javax.swing.JFrame {
         s.setNumero(Integer.parseInt(txtSalaNro.getText().trim()));
         s.setProprietario(Integer.parseInt(txtSalasProprietario.getText().trim()));
 
-        if (sc.cadastrar(s))
+        if (sc.cadastrar(s)) {
             JOptionPane.showMessageDialog(null, "Sala Adicionada com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
-        else
+            limpar_telas();
+        } else
             JOptionPane.showMessageDialog(null, "Erro ao Adicionar", "ERRO !", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_btnSalasAddActionPerformed
 
@@ -173,14 +174,15 @@ public class frmSalas extends javax.swing.JFrame {
         System.out.println(id);
         SalaController sc = new SalaController();
         //Sala s = new Sala();
-        
+
         try {
-            if (sc.buscar(id))
-                //JOptionPane.showMessageDialog(null, "Sala removida com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
+            if (sc.buscar(id)) //JOptionPane.showMessageDialog(null, "Sala removida com sucesso !", "SUCESSO !", JOptionPane.INFORMATION_MESSAGE);
+            {
                 System.out.println("OK");
-            else
-                //JOptionPane.showMessageDialog(null, "Sala não removida!", "ERRO !", JOptionPane.ERROR_MESSAGE);
+            } else //JOptionPane.showMessageDialog(null, "Sala não removida!", "ERRO !", JOptionPane.ERROR_MESSAGE);
+            {
                 System.out.println(";NOK");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(frmSalas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -235,4 +237,11 @@ public class frmSalas extends javax.swing.JFrame {
     private javax.swing.JTextField txtSalasBloco;
     private javax.swing.JTextField txtSalasProprietario;
     // End of variables declaration//GEN-END:variables
+
+    private void limpar_telas() {
+        txtSalaNro.setText("");
+        txtSalasAndar.setText("");
+        txtSalasBloco.setText("");
+        txtSalasProprietario.setText("");
+    }
 }
