@@ -5,6 +5,14 @@
  */
 package View;
 
+import Controller.LocadorController;
+import Model.Locador;
+import Model.PessoaFisica;
+import Model.PessoaJuridica;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
@@ -40,6 +48,7 @@ public class frmNovoLocador extends javax.swing.JFrame {
         //Atribuir máscaras aos respectivos campos
         txtCpf.setFormatterFactory(new DefaultFormatterFactory(mascaraCPF));
         txtDtNascimento.setFormatterFactory(new DefaultFormatterFactory(mascaraDataDeNascimento));
+        txtCnpj.setFormatterFactory(new DefaultFormatterFactory(mascaraCNPJ));
         
     }
 
@@ -58,8 +67,8 @@ public class frmNovoLocador extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rdbPF = new javax.swing.JRadioButton();
+        rdbPJ = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
@@ -73,6 +82,7 @@ public class frmNovoLocador extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtCnpj = new javax.swing.JFormattedTextField();
         btnCadastrar = new javax.swing.JButton();
+        btnConsultarTodos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,14 +92,15 @@ public class frmNovoLocador extends javax.swing.JFrame {
 
         jLabel3.setText("Tipo de Locador:");
 
-        buttonGroupTipoDeLocador.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Pessoa Física");
+        buttonGroupTipoDeLocador.add(rdbPF);
+        rdbPF.setSelected(true);
+        rdbPF.setText("Pessoa Física");
 
-        jRadioButton2.setText("Pessoa Jurídica");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroupTipoDeLocador.add(rdbPJ);
+        rdbPJ.setText("Pessoa Jurídica");
+        rdbPJ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                rdbPJActionPerformed(evt);
             }
         });
 
@@ -178,6 +189,18 @@ public class frmNovoLocador extends javax.swing.JFrame {
         );
 
         btnCadastrar.setText("CADASTRAR");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
+
+        btnConsultarTodos.setText("CONSULTAR");
+        btnConsultarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarTodosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,24 +210,26 @@ public class frmNovoLocador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtLogin))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtLogin))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(rdbPF)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(rdbPJ))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnCadastrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCadastrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnConsultarTodos)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -220,24 +245,82 @@ public class frmNovoLocador extends javax.swing.JFrame {
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
+                    .addComponent(rdbPF)
+                    .addComponent(rdbPJ)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCadastrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar)
+                    .addComponent(btnConsultarTodos))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void rdbPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbPJActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_rdbPJActionPerformed
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        // TODO add your handling code here:
+        try{
+            //Rotina para cadastrar novo Locador
+            Locador locador = new Locador();
+            locador.setDtCadastro(new Date());
+            LocadorController locadorController = new LocadorController();
+
+            //Definir atributos de Locador
+            if(rdbPF.isSelected()){
+                PessoaFisica pf = new PessoaFisica();
+                pf.setLogin(txtLogin.getText());
+                pf.setSenha(txtSenha.getPassword().toString());
+                pf.setNome(txtNome.getText());
+                pf.setCpf(txtCpf.getText().replace(".", "").replace("-", ""));
+
+                //Formatar data de nascimento
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date dtNasc = formatter.parse(txtDtNascimento.getText());
+
+                pf.setDtNascimento(dtNasc);
+                
+                locador.setPf(pf);
+                locador.setTipoDeLocador("PF");
+            }
+            else{
+                PessoaJuridica pj = new PessoaJuridica();
+                pj.setLogin(txtLogin.getText());
+                pj.setSenha(txtSenha.getPassword().toString());
+                pj.setRazaoSocial(txtRazaoSocial.getText());
+                pj.setCnpj(txtCnpj.getText().replace(".", "").replace("/", "").replace("-", ""));
+                
+                locador.setPj(pj);
+                locador.setTipoDeLocador("PJ");
+            }
+            
+            if(locadorController.Cadastrar(locador)){
+                JOptionPane.showMessageDialog(null, "DEU BOM");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "DEU RUIM");
+            }
+        }
+        catch(Exception erro){
+            
+        }
+        
+        
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnConsultarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarTodosActionPerformed
+        // TODO add your handling code here:
+        frmConsultarLocadores con = new frmConsultarLocadores();
+        con.setVisible(true);
+    }//GEN-LAST:event_btnConsultarTodosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,6 +359,7 @@ public class frmNovoLocador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnConsultarTodos;
     private javax.swing.ButtonGroup buttonGroupTipoDeLocador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -287,8 +371,8 @@ public class frmNovoLocador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton rdbPF;
+    private javax.swing.JRadioButton rdbPJ;
     private javax.swing.JFormattedTextField txtCnpj;
     private javax.swing.JFormattedTextField txtCpf;
     private javax.swing.JFormattedTextField txtDtNascimento;

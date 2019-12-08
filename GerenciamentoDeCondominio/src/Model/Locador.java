@@ -38,12 +38,13 @@ public class Locador {
     
     //Métodos
     public boolean Cadastrar(){
-        String comandoSQL = "INSERT INTO " + this.tabelaBD + "(PESSOA_ID, DT_CADASTRO) VALUES (?, ?)";
+        String comandoSQL = "INSERT INTO " + this.tabelaBD + "(PESSOA_ID, DT_CADASTRO, TIPO_DE_LOCADOR) VALUES (?, ?, ?)";
         
         try{
             PreparedStatement query = con.Conectar().prepareStatement(comandoSQL);
             query.setInt(1, this.getPessoaId());
             query.setDate(2, new java.sql.Date(this.getDtCadastro().getTime()));
+            query.setString(3, this.getTipoDeLocador());
             query.executeUpdate();
             
             return true;
@@ -55,7 +56,7 @@ public class Locador {
     
      public List<Locador> Consultar(){
         //DEFINIR COMANDO SQL
-        String comandoSQL = "SELECT * FROM " + this.tabelaBD + " JOIN pessoas on locadores.pessoa_id = pessoas.id join pessoas_fisicas on locadores.pessoa_id = pessoas_fisicas.pessoa_id join pessoas_juridicas on locadores.pessoa_id = pessoas_juridicas.pessoa_id ORDER BY DT_CADASTRO;";
+        String comandoSQL = "SELECT * FROM " + this.tabelaBD + " JOIN pessoas ON LOCADORES.pessoa_id = pessoas.id LEFT JOIN pessoas_fisicas ON pessoas_fisicas.pessoa_id = locadores.pessoa_id left join pessoas_juridicas on locadores.pessoa_id = pessoas_juridicas.pessoa_id;";
         
         //CRIANDO LISTA QUE VAI RECEBER TODO O RESULTADO DA CONSULTA
         List<Locador> listaDeLocadores = new LinkedList<>();

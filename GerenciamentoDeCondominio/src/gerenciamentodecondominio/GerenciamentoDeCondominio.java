@@ -19,7 +19,7 @@ public class GerenciamentoDeCondominio {
      */
     public static void main(String[] args) {
         // Instanciar tela inicial na tela
-        JFrame telaInicial = new frmLogin();
+        JFrame telaInicial = new frmTelaInicial();
         telaInicial.setVisible(true);
     }
     
